@@ -1,18 +1,36 @@
-## Active Record Without Rails
+ActiveRecord Without Rails
+==========================
 
-Some simple ruby script that make use of ActiveRecord CRUD tasks outside of Rails.
+Just a simple example of using ActiveRecord migrations without Rails
 
-## Active Record Resources
+tasks you can do:  rake --tasks
 
-* [Active Record Query Interface](http://guides.rubyonrails.org/active_record_querying.html)
-* [Active Record Validations](http://guides.rubyonrails.org/active_record_validations_callbacks.html)
-* [Active Record Associations](http://guides.rubyonrails.org/association_basics.html)
-* [Rails Database Migrations](http://guides.rubyonrails.org/migrations.html)
+* `rake db:create`
+* `rake db:migrate`
+* `rake db:drop`
 
-## Thanks
+Or, you can run the thing to show that it'll connect
 
-This code was heavily inspired by [Luiz Cezer](https://github.com/lccezinha)'s [Active-Record-and-Migrations-without-Rails](https://github.com/lccezinha/Active-Record-and-Migrations-without-Rails).
+```
+ruby ar-no-rails
+```
 
-## License
+Output:
+> Count of Pages: 0
 
-This is free and unencumbered software released into the public domain. See UNLICENSE for details.
+Lastly, you can IRB it to do stuff:
+
+$ irb
+
+```
+>> require "./ar-no-rails"
+=> true
+>> Page.new
+=> #<Page id: nil, content: nil, published: false>
+>> Page.create content: "the-content"
+=> #<Page id: 1, content: "the-content", published: false>
+```
+
+Copyright
+---------
+None. Really.
