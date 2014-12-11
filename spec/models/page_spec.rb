@@ -1,5 +1,5 @@
 require 'spec_helper'
-
+require File.expand_path('../../../models/page', __FILE__)
 describe Page do
 
   before(:each) do
@@ -16,12 +16,12 @@ describe Page do
   it "should be persistable" do
     count = Page.count
     page = Page.create
-    Page.count.should eq(count + 1)
+    expect( Page.count ).to  eq(count + 1)
   end
 
   it "should be findable" do
     page = Page.create
-    Page.find(page.id).should eq(page)
+    expect( Page.find(page.id)).to eq(page)
   end
 
 end
