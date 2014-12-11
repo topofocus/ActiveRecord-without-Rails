@@ -1,0 +1,148 @@
+topo@gamma:~/ActiveRecord-without-Rails$ rake --tasks
+rake db:create              # Creates the database from DATABASE_URL or config/database.yml for the current RA...
+rake db:drop                # Drops the database from DATABASE_URL or config/database.yml for the current RAIL...
+rake db:fixtures:load       # Load fixtures into the current environment's database
+rake db:migrate             # Migrate the database (options: VERSION=x, VERBOSE=false, SCOPE=blog)
+rake db:migrate:status      # Display status of migrations
+rake db:rollback            # Rolls the schema back to the previous version (specify steps w/ STEP=n)
+rake db:schema:cache:clear  # Clear a db/schema_cache.dump file
+rake db:schema:cache:dump   # Create a db/schema_cache.dump file
+rake db:schema:dump         # Create a db/schema.rb file that is portable against any DB supported by AR
+rake db:schema:load         # Load a schema.rb file into the database
+rake db:seed                # Load the seed data from db/seeds.rb
+rake db:setup               # Create the database, load the schema, and initialize with the seed data (use db:...
+rake db:structure:dump      # Dump the database structure to db/structure.sql
+rake db:version             # Retrieves the current schema version number
+topo@gamma:~/ActiveRecord-without-Rails$ rake db:drop
+topo@gamma:~/ActiveRecord-without-Rails$ rake db:create
+topo@gamma:~/ActiveRecord-without-Rails$ rake db:migrate
+== 1 CreatesPages: migrating ==================================================
+-- create_table(:pages)
+-> 0.0179s
+== 1 CreatesPages: migrated (0.0181s) =========================================
+
+== 2 CreateGhosts: migrating ==================================================
+-- create_table(:ghosts)
+-> 0.0123s
+== 2 CreateGhosts: migrated (0.0125s) =========================================
+
+== 3 AddHouseIdToGhosts: migrating ============================================
+-- add_column(:ghosts, :house_id, :integer)
+-> 0.0392s
+== 3 AddHouseIdToGhosts: migrated (0.0394s) ===================================
+topo@gamma:~/ActiveRecord-without-Rails$ rake db:structure:dump
+ 
+ @gamma:~/ActiveRecord-without-Rails$ cat db/
+ migrate/       schema.rb      structure.sql  
+ topo@gamma:~/ActiveRecord-without-Rails$ cat db/schema.rb 
+ # encoding: UTF-8
+ # This file is auto-generated from the current state of the database. Instead
+ # of editing this file, please use the migrations feature of Active Record to
+ # incrementally modify your database, and then regenerate this schema definition.
+ #
+ # Note that this schema.rb definition is the authoritative source for your
+ # database schema. If you need to create the application database on another
+ # system, you should be using db:schema:load, not running all the migrations
+ # from scratch. The latter is a flawed and unsustainable approach (the more migrations
+ # you'll amass, the slower it'll run and the greater likelihood for issues).
+ #
+ # It's strongly recommended that you check this file into your version control system.
+
+ ActiveRecord::Schema.define(version: 3) do
+
+ create_table "ghosts", force: true do |t|
+	t.string   "name"
+	t.string   "phone"
+	t.integer  "age"
+	t.datetime "created_at"
+	t.datetime "updated_at"
+	t.integer  "house_id"
+ end
+
+ create_table "pages", force: true do |t|
+ 	t.text    "content"
+ t.boolean "published", default: false
+ end
+
+ end
+
+-- MySQL dump 10.13  Distrib 5.5.40, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: norails_devel
+-- ------------------------------------------------------
+-- Server version	5.5.40-0ubuntu0.12.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `ghosts`
+--
+
+DROP TABLE IF EXISTS `ghosts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+	CREATE TABLE `ghosts` (
+			`id` int(11) NOT NULL AUTO_INCREMENT,
+			`name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			`phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			`age` int(11) DEFAULT NULL,
+			`created_at` datetime DEFAULT NULL,
+			`updated_at` datetime DEFAULT NULL,
+			`house_id` int(11) DEFAULT NULL,
+			PRIMARY KEY (`id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+	/*!40101 SET character_set_client = @saved_cs_client */;
+
+	--
+	-- Table structure for table `pages`
+	--
+
+	DROP TABLE IF EXISTS `pages`;
+	/*!40101 SET @saved_cs_client     = @@character_set_client */;
+	/*!40101 SET character_set_client = utf8 */;
+	CREATE TABLE `pages` (
+			`id` int(11) NOT NULL AUTO_INCREMENT,
+			`content` text COLLATE utf8_unicode_ci,
+			`published` tinyint(1) DEFAULT '0',
+			PRIMARY KEY (`id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+	/*!40101 SET character_set_client = @saved_cs_client */;
+
+	--
+	-- Table structure for table `schema_migrations`
+	--
+
+	DROP TABLE IF EXISTS `schema_migrations`;
+	/*!40101 SET @saved_cs_client     = @@character_set_client */;
+	/*!40101 SET character_set_client = utf8 */;
+	CREATE TABLE `schema_migrations` (
+			`version` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+			UNIQUE KEY `unique_schema_migrations` (`version`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+	/*!40101 SET character_set_client = @saved_cs_client */;
+	/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+	/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+	/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+	/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+	/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+	/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+	/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+	/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+	-- Dump completed on 2014-12-11  7:17:08
+	INSERT INTO schema_migrations (version) VALUES ('1');
+
+	INSERT INTO schema_migrations (version) VALUES ('2');
+
+	INSERT INTO schema_migrations (version) VALUES ('3');
+
