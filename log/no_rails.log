@@ -1,0 +1,4 @@
+# Logfile created on 2014-12-12 15:19:47 +0100 by logger.rb/47272
+12.12.(15:19:47)DEBUG-> boot :..: unsuccessfully required files: /home/topo/ActiveRecord-without-Rails/lib/connection.rb;true 
+12.12.(15:22:18)DEBUG-> boot :..: unsuccessfully required files: /home/topo/ActiveRecord-without-Rails/lib/connection.rb;true 
+12.12.(15:22:22)DEBUG-> boot :..: unsuccessfully required files: /home/topo/ActiveRecord-without-Rails/lib/connection.rb;true 

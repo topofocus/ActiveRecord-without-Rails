@@ -1,5 +1,5 @@
 $:.unshift File.expand_path('.')
-require 'lib/boot'
+require 'config/boot'
 
 Page.destroy_all
 Page.create
