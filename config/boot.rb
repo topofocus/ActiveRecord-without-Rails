@@ -8,13 +8,16 @@ require 'active_record'
 
 # require all the models and libraries
 project_root = File.expand_path('../..', __FILE__)
+begin
 models= Dir.glob(File.join( project_root, "models",'**', "*rb")) 
 result =  models.collect { |file| [file, require( file )] }
 libs= Dir.glob(File.join( project_root, "lib",'**', "*rb")) 
-begin
-result << libs.reverse.collect { |file| [file, require( file )] }
+result += libs.reverse.collect { |file| [file, require( file )] }
+## place to require further config-files eg
+# require File.expand_path('../../config/mail', __FILE__)
 rescue NameError => e
 	# this Message goes into the default log-file, specified in MyLog
+	require File.expand_path('../../lib/mylog', __FILE__)  # ensure that mylog is available
 	m= MyLog.new 
 	m.log.fatal { "Error while requiring library-files" }
 	m.log.fatal { libs.inspect }
@@ -28,10 +31,9 @@ env = if e =~ /^p/
 	      else
 		      'development'
 	      end
-puts "ARGV: #{ARGV.inspect}"	     
-puts "Environment --> #{env}"
 MyLog.new filename:env
 logger =  MyLog.logger.log
+ActiveRecord::Base.logger = logger
 logger.progname = 'boot'
 logger.sev_threshold = env=='production' ? Logger::INFO : Logger::DEBUG  # WARN  # INFO # ERROR # FATAL
 logger.info "----------------< starting >-------------------------------------------"
@@ -39,6 +41,4 @@ if files= result.collect{|f,s| f if s.nil?}.compact.present?
 	logger.debug{ "unsuccessfully required files: #{files.join(';')} " }
 end
 # open a connection to the db
-#require File.expand_path('../../lib/connection', __FILE__)
-ActiveRecord::Base.logger = logger
 Connection.connect environment:env
