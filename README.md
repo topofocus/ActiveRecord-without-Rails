@@ -1,7 +1,14 @@
 ActiveRecord Without Rails
 ==========================
 
-Just a simple example of using ActiveRecord migrations without Rails
+A simple example of using ActiveRecord  without Rails
+using ActiveRecord 4.1.8 and MySQL
+ 
+includes RSpec-test-suite with Girl-Factory and Guard
+
+Setup with »bundle install , bundle update» and configure 
+config/database.yml as in Rails.
+
 
 tasks you can do:  rake --tasks
 (including)
@@ -9,8 +16,7 @@ tasks you can do:  rake --tasks
 * `rake db:migrate`
 * `rake db:drop`
 
-Or, you can run the thing to show that it'll connect 
-( after editing config.database.yml )
+You can run the thing to show that it'll connect 
 
 ```
 ruby no-rails
@@ -34,4 +40,4 @@ $ irb
 
 Copyright
 ---------
-None. Really.
+MIT
